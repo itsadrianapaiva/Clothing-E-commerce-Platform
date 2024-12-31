@@ -8,7 +8,7 @@ const authRouter = require("./routes/auth-routes");
 
 mongoose
   .connect(
-    "mongodb+srv://itsadrianapaiva:Plaxod110592@cluster0.v0glf.mongodb.net/"
+    "MONGO_URI"
   )
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
