@@ -9,6 +9,14 @@ const registerUser = async (req, res) => {
 
   try {
 
+    const checkUser = await User.findOne({ email });
+    if (checkUser) {
+      return res.json({
+        success: false,
+        message: "User already exists with this email. Please login instead or register with a different email.",
+      })
+    }
+
         const hashPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
           userName,
@@ -36,6 +44,10 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+
+
+
+
   } catch (error) {
     console.log(error);
     res.status(500).json({
