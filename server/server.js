@@ -1,3 +1,5 @@
+//entry point to initialize middleware, routes and connection services
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -35,3 +37,5 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+//flow of request: client sends a request to server -> middleware process requests before reach route -> route matches the endpoint -> controller handles the request -> middleware handles errors or modify response to client-> model interacts w database -> response sent back to client

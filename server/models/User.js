@@ -1,3 +1,5 @@
+//data structure to interact w database. define how data is stored, retrieved and validated
+
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
