@@ -60,7 +60,7 @@ export default function AdminSidebar({ open, setOpen }) {
 
   return (
     <Fragment>
-      <Sheet open={open} onOpenChange={setOpen}>
+      <Sheet open={open} onOpenChange={setOpen} forceMount>
         <SheetContent
           side="left"
           className="w-64"
@@ -68,11 +68,11 @@ export default function AdminSidebar({ open, setOpen }) {
         >
           <div className="flex flex-col h-full">
             <SheetHeader className="border-b">
-              <SheetTitle className="flex items-center gap-2">
+              <SheetTitle className="flex items-center gap-2 my-5">
                 <ChartNoAxesCombined size={30} />
                 <span className="text-2xl font-extrabold">Admin Panel</span>
               </SheetTitle>
-              <SheetDescription>
+              <SheetDescription className="sr-only">
                 Sidebar sheet for admin panel.
               </SheetDescription>
             </SheetHeader>
