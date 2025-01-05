@@ -12,7 +12,7 @@ import CommonForm from "@/components/common/form";
 import { addProductFormElements } from "@/config";
 import ProductImageUpload from "@/components/admin-view/image-upload";
 
-const initialFormData ={
+const initialFormData = {
   image: null,
   title: "",
   description: "",
@@ -21,12 +21,16 @@ const initialFormData ={
   price: "",
   SalePrice: "",
   totalStock: "",
-}
+};
 
 export default function AdminProducts() {
   const [openCreateProductsDialog, setOpenCreateProductsDialog] =
     useState(false);
-    const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(initialFormData);
+  const [imageFile, setImageFile] = useState(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+
+  function onSubmit() {}
 
   return (
     <Fragment>
@@ -50,13 +54,18 @@ export default function AdminProducts() {
               Sidebar sheet to add new product.
             </SheetDescription>
           </SheetHeader>
-          <ProductImageUpload />
+          <ProductImageUpload
+            imageFile={imageFile}
+            setImageFile={setImageFile}
+            uploadedImageUrl={uploadedImageUrl}
+            setUploadedImageUrl={setUploadedImageUrl}
+          />
           <div className="py-6">
-            <CommonForm 
-            formData={formData}
-            setFormData={setFormData}
-            buttonText="Add"
-            formControls={addProductFormElements}
+            <CommonForm
+              formData={formData}
+              setFormData={setFormData}
+              buttonText="Add"
+              formControls={addProductFormElements}
             />
           </div>
         </SheetContent>
