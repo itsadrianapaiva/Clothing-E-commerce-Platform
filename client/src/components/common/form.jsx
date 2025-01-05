@@ -1,9 +1,5 @@
 import { Input } from "../ui/input";
-import { Select } from "../ui/select";
-import { SelectTrigger } from "@radix-ui/react-select";
-import { SelectValue } from "@radix-ui/react-select";
-import { SelectContent } from "@radix-ui/react-select";
-import { SelectItem } from "@radix-ui/react-select";
+import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
@@ -53,7 +49,7 @@ export default function CommonForm({
             }
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={getControlItem.placeholder} />
+              <SelectValue placeholder={getControlItem.label} />
             </SelectTrigger>
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0
