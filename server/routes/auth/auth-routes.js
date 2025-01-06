@@ -1,12 +1,10 @@
-//defined endpoints and map http methods to specific controller functions. how app responds to requests.
-
 const express = require("express");
 const {
   registerUser,
   loginUser,
   logoutUser,
   authMiddleware,
-} = require("../controllers/auth/auth-controller");
+} = require("../../controllers/auth/auth-controller");
 
 const router = express.Router();
 
@@ -17,10 +15,9 @@ router.get("/check-auth", authMiddleware, (req, res) => {
   const user = req.user;
   res.status(200).json({
     success: true,
-    message: "User authenticated",
+    message: "Authenticated user!",
     user,
   });
 });
 
-console.log("Auth Routes Loaded");
 module.exports = router;

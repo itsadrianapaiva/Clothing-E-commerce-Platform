@@ -1,14 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
+import axios from "axios";
 
 export default function ProductImageUpload({
   imageFile,
   setImageFile,
   uploadedImageUrl,
   setUploadedImageUrl,
+  setImageLoadingState,
 }) {
   const inputRef = useRef(null);
 
@@ -39,11 +42,35 @@ export default function ProductImageUpload({
     }
   }
 
+  console.log(imageFile);
+
+  async function uploadImageToCloudinary() {
+    setImageLoadingState(true);
+    const data = new FormData();
+    data.append("my_file", imageFile);
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/products/upload-image",
+      data
+    );
+    console.log(response, "response");
+    if (response?.data?.success) {
+      setUploadedImageUrl(response.data.result.url);
+      setImageLoadingState(false);
+    }
+  }
+
+  useEffect(() => {
+    if (imageFile !== null) uploadImageToCloudinary();
+  }, [imageFile]);
 
   return (
     <div className="w-full max-w-md mx-auto mt-4">
       <Label className="text-base font-semibold mb-2 block">Upload Image</Label>
-      <div onDragOver={handleDragOver} onDrop={handleDrop} className="border-2 border-dashed rounded-lg p-4">
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        className="border-2 border-dashed rounded-lg p-4"
+      >
         <Input
           id="image-upload"
           type="file"
@@ -62,12 +89,17 @@ export default function ProductImageUpload({
         ) : (
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-             <FileIcon className="w-8 h-8 text-primary mr-2"/>
+              <FileIcon className="w-8 h-8 text-primary mr-2" />
             </div>
             <p className="text-sm font-medium">{imageFile.name}</p>
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={handleRemoveImage}>
-                <XIcon className="w-4 h-4" />
-                <span className="sr-only">Remove File</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={handleRemoveImage}
+            >
+              <XIcon className="w-4 h-4" />
+              <span className="sr-only">Remove File</span>
             </Button>
           </div>
         )}
