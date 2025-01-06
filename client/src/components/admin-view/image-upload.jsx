@@ -5,12 +5,14 @@ import { Label } from "../ui/label";
 import { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { Skeleton } from "../ui/skeleton";
 
 export default function ProductImageUpload({
   imageFile,
   setImageFile,
   uploadedImageUrl,
   setUploadedImageUrl,
+  imageLoadingState,
   setImageLoadingState,
 }) {
   const inputRef = useRef(null);
@@ -86,6 +88,8 @@ export default function ProductImageUpload({
             <UploadCloudIcon className="h-10 w-10 text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload an image</span>
           </Label>
+        ) : imageLoadingState ? (
+          <Skeleton className="h-10 bg-gray-100" />
         ) : (
           <div className="flex items-center justify-between">
             <div className="flex items-center">
