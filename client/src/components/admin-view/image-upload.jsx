@@ -55,6 +55,7 @@ export default function ProductImageUpload({
       data
     );
     console.log(response, "response");
+    
     if (response?.data?.success) {
       setUploadedImageUrl(response.data.result.url);
       setImageLoadingState(false);

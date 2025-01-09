@@ -11,7 +11,11 @@ import CommonForm from "@/components/common/form";
 import { addProductFormElements } from "@/config";
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProducts } from "@/store/admin/products-slice/index";
+import {
+  addNewProduct,
+  fetchAllProducts,
+} from "@/store/admin/products-slice/index";
+import { useToast } from "@/hooks/use-toast";
 
 const initialFormData = {
   image: null,
@@ -31,22 +35,33 @@ export default function AdminProducts() {
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
-  const {productList} = useSelector(state => state.adminProducts)
+  const { productList } = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(addNewProduct({
-      ...formData,
-      image: uploadedImageUrl
-    })).then((data) => {
-      console.log(data, 'data');
-    })
-    
+
+    dispatch(
+      addNewProduct({
+        ...formData,
+        image: uploadedImageUrl,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchAllProducts());
+        setOpenCreateProductsDialog(false);
+        setImageFile(null);
+        setFormData(initialFormData);
+        toast({
+          title: "Product added successfully",
+        });
+      }
+    });
   }
-  
+
   useEffect(() => {
-    dispatch(fetchAllProducts())
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   console.log(productList, "productList");
@@ -87,6 +102,7 @@ export default function AdminProducts() {
               setFormData={setFormData}
               buttonText="Add"
               formControls={addProductFormElements}
+              onSubmit={onSubmit}
             />
           </div>
         </SheetContent>
