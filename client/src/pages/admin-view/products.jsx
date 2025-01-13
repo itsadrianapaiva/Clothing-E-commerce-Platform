@@ -16,6 +16,7 @@ import {
   fetchAllProducts,
 } from "@/store/admin/products-slice/index";
 import { useToast } from "@/hooks/use-toast";
+import AdminProductTile from "@/components/admin-view/product-tile";
 
 const initialFormData = {
   image: null,
@@ -74,7 +75,11 @@ export default function AdminProducts() {
         </Button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4"></div>
+      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {productList && productList.length > 0 ? 
+          productList.map((productItem) => (<AdminProductTile product={productItem} />))
+        : null}
+      </div>
       <Sheet
         open={openCreateProductsDialog}
         onOpenChange={() => {

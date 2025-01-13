@@ -13,7 +13,7 @@ export default function AdminProductTile({ product }) {
           />
         </div>
         <CardContent>
-          <h2 className="text-xl font-bold mb-2">{product?.title}</h2>
+          <h2 className="text-xl font-bold mb-2 mt-2">{product?.title}</h2>
           <div className="flex justify-between items-center mb-2">
             <span
               className={`${
@@ -22,7 +22,9 @@ export default function AdminProductTile({ product }) {
             >
               ${product?.price}
             </span>
-            <span className="text-lg font-bold">${product?.salePrice}</span>
+            {product?.salePrice > 0 ? (
+              <span className="text-lg font-bold">${product?.salePrice}</span>
+            ) : null}
           </div>
         </CardContent>
         <CardFooter className="flex justify-between items-center">
