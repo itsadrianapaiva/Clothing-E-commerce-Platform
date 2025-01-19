@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addNewProduct,
   editProduct,
+  deleteProduct,
   fetchAllProducts,
 } from "@/store/admin/products-slice/index";
 import { useToast } from "@/hooks/use-toast";
@@ -26,7 +27,7 @@ const initialFormData = {
   category: "",
   brand: "",
   price: "",
-  SalePrice: "",
+  salePrice: "",
   totalStock: "",
 };
 
@@ -79,6 +80,21 @@ export default function AdminProducts() {
         });
   }
 
+  function handleDelete(getCurrentProductId) {
+    dispatch(deleteProduct(getCurrentProductId)).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchAllProducts());
+      }
+    });
+  }
+
+  function isFormValid() {
+    return Object.keys(formData)
+      .map((key) => formData[key] !== "")
+      .every((item) => item);
+  }
+  console.log(isFormValid(), "isFormValid");
+
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
@@ -102,6 +118,7 @@ export default function AdminProducts() {
                 setCurrentEditedId={setCurrentEditedId}
                 product={productItem}
                 key={productItem._id}
+                handleDelete={handleDelete}
               />
             ))
           : null}
@@ -134,11 +151,12 @@ export default function AdminProducts() {
           />
           <div className="py-6">
             <CommonForm
+              onSubmit={onSubmit}
               formData={formData}
               setFormData={setFormData}
               buttonText={currentEditedId !== null ? "Update" : "Add"}
               formControls={addProductFormElements}
-              onSubmit={onSubmit}
+              isBtnDisabled={!isFormValid()}
             />
           </div>
         </SheetContent>

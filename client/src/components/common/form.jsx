@@ -9,6 +9,7 @@ export default function CommonForm({
   setFormData,
   onSubmit,
   buttonText,
+  isBtnDisabled,
 }) {
   const types = {
     INPUT: "text",
@@ -99,6 +100,7 @@ export default function CommonForm({
             }
           />
         );
+        break;
     }
 
     return element;
@@ -114,7 +116,7 @@ export default function CommonForm({
           </div>
         ))}
       </div>
-      <Button type="submit" className="mt-8 w-full">
+      <Button disabled={isBtnDisabled} type="submit" className="mt-8 w-full">
         {buttonText || "Submit"}
       </Button>
     </form>
